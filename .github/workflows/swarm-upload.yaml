@@ -31,7 +31,7 @@ jobs:
         with:
           dir: ./public
           index-document: index.html
-          bee-url: https://bee-1.fairdatasociety.org
+          bee-url: https://gateway.fairdatasociety.org/proxy/
           timeout: 300000
           deferred: false
 
@@ -40,8 +40,8 @@ jobs:
         id: feed
         with:
           reference: ${{ steps.upload.outputs.reference }}
-          topic: "swarm-blog"
-          bee-url: https://bee-1.fairdatasociety.org
+          topic: swarm-blog
+          bee-url: https://gateway.fairdatasociety.org/proxy/
           signer: c869821c02560960441332cc004b56a03cb8c9521888d056233b1b961c0959fd
 
       - uses: darkobas2/swarm-actions/reference-to-cid@latest
