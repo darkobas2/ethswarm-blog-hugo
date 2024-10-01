@@ -9,10 +9,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: '18'
       - name: Setup Hugo
@@ -26,28 +26,25 @@ jobs:
           hugo -D --gc
           npx -y pagefind --source public
       - name: Upload to Swarm
-        uses: ethersphere/swarm-actions/upload-dir@v0
+        uses: ethersphere/swarm-actions/upload-dir@latest
         id: upload
         with:
           dir: ./public
           index-document: index.html
-          postage-batch-id: ${{ secrets.PRIVATE_POSTAGE_BATCH_ID }}
-          bee-url: ${{ secrets.PRIVATE_BEE_URL }}
+          bee-url: https://bee-1.fairdatasociety.org
           timeout: 300000
-          headers: |
-            authorization: ${{ secrets.PRIVATE_API_TOKEN }}
+          deferred: false
+
       - name: Setup feed
-        uses: ethersphere/swarm-actions/write-feed@v0
+        uses: ethersphere/swarm-actions/write-feed@latest
         id: feed
         with:
           reference: ${{ steps.upload.outputs.reference }}
           topic: "swarm-blog"
-          postage-batch-id: ${{ secrets.PRIVATE_POSTAGE_BATCH_ID }}
-          bee-url: ${{ secrets.PRIVATE_BEE_URL }}
-          signer: ${{ secrets.PRIVATE_SIGNER }}
-          headers: |
-            authorization: ${{ secrets.PRIVATE_API_TOKEN }}
-      - uses: ethersphere/swarm-actions/reference-to-cid@v0
+          bee-url: https://bee-1.fairdatasociety.org
+          signer: c869821c02560960441332cc004b56a03cb8c9521888d056233b1b961c0959fd
+
+      - uses: ethersphere/swarm-actions/reference-to-cid@latest
         id: cid
         with:
           reference: ${{ steps.feed.outputs.manifest }}
