@@ -26,7 +26,7 @@ jobs:
           hugo -D --gc
           npx -y pagefind --source public
       - name: Upload to Swarm
-        uses: ethersphere/swarm-actions/upload-dir@v0.7.0
+        uses: darkobas2/swarm-actions/upload-dir@v0.8.0
         id: upload
         with:
           dir: ./public
@@ -36,7 +36,7 @@ jobs:
           deferred: false
 
       - name: Setup feed
-        uses: ethersphere/swarm-actions/write-feed@v0.7.0
+        uses: darkobas2/swarm-actions/write-feed@v0.8.0
         id: feed
         with:
           reference: ${{ steps.upload.outputs.reference }}
@@ -44,7 +44,7 @@ jobs:
           bee-url: https://bee-1.fairdatasociety.org
           signer: c869821c02560960441332cc004b56a03cb8c9521888d056233b1b961c0959fd
 
-      - uses: ethersphere/swarm-actions/reference-to-cid@latest
+      - uses: darkobas2/swarm-actions/reference-to-cid@latest
         id: cid
         with:
           reference: ${{ steps.feed.outputs.manifest }}
