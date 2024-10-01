@@ -26,7 +26,7 @@ jobs:
           hugo -D --gc
           npx -y pagefind --source public
       - name: Upload to Swarm
-        uses: ethersphere/swarm-actions/upload-dir@v0.6
+        uses: ethersphere/swarm-actions/upload-dir@v0.7.0
         id: upload
         with:
           dir: ./public
@@ -36,7 +36,7 @@ jobs:
           deferred: false
 
       - name: Setup feed
-        uses: ethersphere/swarm-actions/write-feed@v0.6
+        uses: ethersphere/swarm-actions/write-feed@v0.7.0
         id: feed
         with:
           reference: ${{ steps.upload.outputs.reference }}
